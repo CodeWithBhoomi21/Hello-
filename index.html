@@ -788,7 +788,13 @@ function loadProjects() {
         function(snapshot) {
 
             projects = [];
+            
+console.log("Current User UID:", currentUser.uid);
+console.log("Total Documents:", snapshot.size);
 
+snapshot.forEach(function(item) {
+    console.log("Project Data:", item.data());
+});
             snapshot.forEach(function(item) {
 
                 projects.push({
