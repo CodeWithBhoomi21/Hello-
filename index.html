@@ -781,53 +781,36 @@ function loadProjects() {
         where("ownerUid", "==", currentUser.uid)
     );
 
-    onSnapshot(
+    onSnapshot(q, function(snapshot) {
 
-        q,
+        projects.length = 0;
 
-        function(snapshot) {
+        snapshot.forEach(function(item) {
 
-            projects = [];
-            
-console.log("Current User UID:", currentUser.uid);
-console.log("Total Documents:", snapshot.size);
-
-snapshot.forEach(function(item) {
-    console.log("Project Data:", item.data());
-});
-            snapshot.forEach(function(item) {
-
-                projects.push({
-                    id: item.id,
-                    ...item.data()
-                });
-
+            projects.push({
+                id: item.id,
+                ...item.data()
             });
 
-            projects.sort(function(a, b) {
+        });
 
-                return (b.createdAt || 0) - (a.createdAt || 0);
+        projects.sort(function(a, b) {
+            return (b.createdAt || 0) - (a.createdAt || 0);
+        });
 
-            });
+        displayProjects();
 
-            displayProjects();
+        message.textContent =
+            "Projects found: " + snapshot.size +
+            " | User UID: " + currentUser.uid;
 
-            message.textContent = "Database connected successfully!";
+    }, function(error) {
 
-        },
+        message.textContent = "Database error: " + error.message;
 
-        function(error) {
-
-            console.error(error);
-
-            message.textContent = "Database error: " + error.message;
-
-        }
-
-    );
+    });
 
 }
-
 
 // DISPLAY PROJECTS
 
