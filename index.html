@@ -1,78 +1,272 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevProject Hub</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             background: #f1f5f9;
             margin: 0;
+            color: #172554;
         }
 
         header {
-            background: #172554;
+            background: linear-gradient(135deg, #172554, #2563eb);
             color: white;
-            padding: 20px;
             text-align: center;
+            padding: 38px 15px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 34px;
+        }
+
+        header p {
+            margin: 10px 0 0;
         }
 
         .container {
-            width: 85%;
-            margin: 25px auto;
+            width: 90%;
+            max-width: 1250px;
+            margin: 30px auto;
+        }
+
+        h2 {
+            margin-top: 30px;
         }
 
         .stats {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
 
         .box {
-            background: white;
-            padding: 20px;
             flex: 1;
-            border-radius: 10px;
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            border-left: 5px solid #2563eb;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
         }
 
-        input, button {
-            padding: 12px;
-            margin: 6px 0;
-            border-radius: 5px;
-            border: 1px solid gray;
+        .box h2 {
+            margin: 0;
+            color: #2563eb;
+            font-size: 32px;
+        }
+
+        .box p {
+            color: #64748b;
+            margin-bottom: 0;
+        }
+
+        .form-box {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #334155;
         }
 
         input {
-            width: 90%;
-            max-width: 500px;
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        input[type="file"] {
+            background: #f8fafc;
         }
 
         button {
             background: #2563eb;
             color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 7px;
             cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #previewBox {
+            display: none;
+            margin: 15px 0;
+        }
+
+        #preview {
+            width: 220px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #2563eb;
+        }
+
+        #message {
+            font-weight: bold;
+            color: #15803d;
+            overflow-wrap: anywhere;
+        }
+
+        .search-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .project-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+            margin-top: 20px;
         }
 
         .project {
             background: white;
-            padding: 15px;
-            margin-top: 12px;
-            border-radius: 8px;
-            border-left: 5px solid #2563eb;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            transition: 0.3s;
+        }
+
+        .project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+            background: #dbeafe;
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project h3 {
+            color: #172554;
+            margin-top: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .project-description {
+            color: #64748b;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .creator {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+            margin: 8px 0;
+            overflow-wrap: anywhere;
         }
 
         .status {
-            color: green;
+            color: #15803d;
             font-weight: bold;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 10px 13px;
+            border-radius: 6px;
+            margin: 8px 5px 8px 0;
+            font-size: 14px;
+        }
+
+        .project-link:hover {
+            background: #1d4ed8;
         }
 
         .delete {
             background: #dc2626;
+            padding: 10px 14px;
         }
 
-        @media(max-width:600px) {
+        .delete:hover {
+            background: #b91c1c;
+        }
+
+        .empty {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            color: #64748b;
+            grid-column: 1 / -1;
+        }
+
+        footer {
+            background: #172554;
+            color: white;
+            text-align: center;
+            padding: 22px;
+            margin-top: 50px;
+        }
+
+        @media(max-width: 650px) {
             .stats {
                 flex-direction: column;
+            }
+
+            header h1 {
+                font-size: 27px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .form-box {
+                padding: 17px;
             }
         }
     </style>
@@ -81,15 +275,19 @@
 <body>
 
 <header>
-    <h1>DevProject Hub</h1>
+    <h1>🚀 DevProject Hub</h1>
     <p>GitHub Project Deployment & Management</p>
+    <p>Manage • Showcase • Deploy Your Projects</p>
 </header>
 
 <div class="container">
 
-    <h2>My Dashboard</h2>
+    <!-- DASHBOARD -->
+
+    <h2>📊 My Dashboard</h2>
 
     <div class="stats">
+
         <div class="box">
             <h2 id="total">0</h2>
             <p>Total Projects</p>
@@ -99,40 +297,93 @@
             <h2 id="live">0</h2>
             <p>Live Projects</p>
         </div>
+
     </div>
 
-    <h2>Add New Project</h2>
 
-    <input type="text" id="name"
-    placeholder="Enter Project Name">
+    <!-- ADD NEW PROJECT -->
 
-    <input type="text" id="description"
-    placeholder="Enter Description">
+    <h2>➕ Add New Project</h2>
 
-    <input type="url" id="github"
-    placeholder="Enter GitHub Repository URL">
+    <div class="form-box">
 
-    <br>
+        <div class="form-group">
+            <label for="name">Project Name</label>
+            <input type="text" id="name"
+                placeholder="Enter Project Name">
+        </div>
 
-    <button id="addBtn">Add Project</button>
+        <div class="form-group">
+            <label for="description">Project Description</label>
+            <input type="text" id="description"
+                placeholder="Enter Project Description">
+        </div>
 
-    <p id="message">Connecting to database...</p>
+        <div class="form-group">
+            <label for="creator">Created By</label>
+            <input type="text" id="creator"
+                placeholder="Enter Creator Name">
+        </div>
 
-    <h2>Search Projects</h2>
+        <div class="form-group">
+            <label for="github">GitHub Repository URL</label>
+            <input type="url" id="github"
+                placeholder="https://github.com/username/project">
+        </div>
 
-    <input type="text" id="search"
-    placeholder="Search Project...">
+        <div class="form-group">
+            <label for="projectImage">Upload Project Image</label>
+            <input type="file" id="projectImage"
+                accept="image/jpeg,image/png,image/webp">
+            <small>JPG, PNG or WEBP | Maximum original size 5 MB</small>
+        </div>
 
-    <h2>My Projects</h2>
+        <div id="previewBox">
+            <p><b>Image Preview:</b></p>
+            <img id="preview" alt="Project image preview">
+        </div>
 
-    <div id="projectList"></div>
+        <button id="addBtn">🚀 Add Project</button>
+
+        <p id="message">Connecting to database...</p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <h2>🔍 Search Projects</h2>
+
+    <div class="search-box">
+        <input type="text" id="search"
+            placeholder="Search by project name, creator or description...">
+    </div>
+
+
+    <!-- MY PROJECTS -->
+
+    <h2>💻 My Projects</h2>
+
+    <div id="projectList" class="project-list">
+        <div class="empty">Loading projects...</div>
+    </div>
 
 </div>
 
+<footer>
+    <h3>DevProject Hub</h3>
+    <p>Designed & Developed with ❤️</p>
+    <p>© 2026 DevProject Hub | All Rights Reserved</p>
+</footer>
+
+
 <script type="module">
 
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+// FIREBASE IMPORTS
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 
 import {
     getFirestore,
@@ -143,29 +394,28 @@ import {
     query,
     where,
     onSnapshot
-} from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 import {
     getAuth,
     signInAnonymously
-} from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 
-// STEP 1: ADD YOUR FIREBASE CONFIG
+// FIREBASE CONFIGURATION
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAfsnpdA0JGk_QBvgMka52kIpwMpopsIOs",
-  authDomain: "devproject-hub-6679f.firebaseapp.com",
-  projectId: "devproject-hub-6679f",
-  storageBucket: "devproject-hub-6679f.firebasestorage.app",
-  messagingSenderId: "923886456737",
-  appId: "1:923886456737:web:3562eff25a312f8da485e0",
-  measurementId: "G-5YBFFPTJHJ"
+    apiKey: "AIzaSyAfsnpdA0JGk_QBvgMka52kIpwMpopsIOs",
+    authDomain: "devproject-hub-6679f.firebaseapp.com",
+    projectId: "devproject-hub-6679f",
+    storageBucket: "devproject-hub-6679f.firebasestorage.app",
+    messagingSenderId: "923886456737",
+    appId: "1:923886456737:web:3562eff25a312f8da485e0",
+    measurementId: "G-5YBFFPTJHJ"
 };
 
-// STEP 2: CONNECT FIREBASE
+
+// CONNECT FIREBASE
 
 const app = initializeApp(firebaseConfig);
 
@@ -173,17 +423,224 @@ const db = getFirestore(app);
 
 const auth = getAuth(app);
 
+
+// VARIABLES
+
 let currentUser = null;
 let projects = [];
 
+
+// HTML ELEMENTS
+
 const nameInput = document.getElementById("name");
 const descriptionInput = document.getElementById("description");
+const creatorInput = document.getElementById("creator");
 const githubInput = document.getElementById("github");
+const imageInput = document.getElementById("projectImage");
+
+const preview = document.getElementById("preview");
+const previewBox = document.getElementById("previewBox");
+
 const message = document.getElementById("message");
 const projectList = document.getElementById("projectList");
+const addBtn = document.getElementById("addBtn");
 
 
-// STEP 3: LOGIN
+// IMAGE VARIABLES
+
+let selectedImageData = "";
+
+
+// IMAGE COMPRESSION
+
+function compressImage(file) {
+
+    return new Promise(function(resolve, reject) {
+
+        const reader = new FileReader();
+
+        reader.onerror = function() {
+            reject(new Error("Could not read image."));
+        };
+
+        reader.onload = function(event) {
+
+            const img = new Image();
+
+            img.onerror = function() {
+                reject(new Error("Invalid image file."));
+            };
+
+            img.onload = function() {
+
+                const canvas = document.createElement("canvas");
+
+                let width = img.width;
+                let height = img.height;
+
+                const maxDimension = 1000;
+
+                if (width > maxDimension || height > maxDimension) {
+
+                    const ratio = Math.min(
+                        maxDimension / width,
+                        maxDimension / height
+                    );
+
+                    width = Math.round(width * ratio);
+                    height = Math.round(height * ratio);
+
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const context = canvas.getContext("2d");
+
+                context.fillStyle = "#ffffff";
+                context.fillRect(0, 0, width, height);
+
+                context.drawImage(img, 0, 0, width, height);
+
+                let quality = 0.75;
+                let result = canvas.toDataURL("image/jpeg", quality);
+
+                // Keep image data safely below Firestore's document limit.
+
+                while (result.length > 450 * 1024 && quality > 0.25) {
+
+                    quality -= 0.10;
+
+                    result = canvas.toDataURL(
+                        "image/jpeg",
+                        quality
+                    );
+
+                }
+
+                while (result.length > 450 * 1024 &&
+                       width > 300 && height > 300) {
+
+                    width = Math.round(width * 0.8);
+                    height = Math.round(height * 0.8);
+
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    context.fillStyle = "#ffffff";
+                    context.fillRect(0, 0, width, height);
+
+                    context.drawImage(img, 0, 0, width, height);
+
+                    quality = 0.60;
+
+                    result = canvas.toDataURL(
+                        "image/jpeg",
+                        quality
+                    );
+
+                }
+
+                if (result.length > 450 * 1024) {
+
+                    reject(new Error(
+                        "Image is too large. Please select a smaller image."
+                    ));
+
+                    return;
+
+                }
+
+                resolve(result);
+
+            };
+
+            img.src = event.target.result;
+
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+// IMAGE PREVIEW
+
+imageInput.addEventListener("change", async function() {
+
+    const file = imageInput.files[0];
+
+    selectedImageData = "";
+
+    if (!file) {
+
+        previewBox.style.display = "none";
+        preview.removeAttribute("src");
+
+        return;
+
+    }
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+
+        alert("Please select JPG, PNG or WEBP image.");
+
+        imageInput.value = "";
+        previewBox.style.display = "none";
+
+        return;
+
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+
+        alert("Original image must be less than 5 MB.");
+
+        imageInput.value = "";
+        previewBox.style.display = "none";
+
+        return;
+
+    }
+
+    try {
+
+        message.textContent = "Compressing image...";
+
+        selectedImageData = await compressImage(file);
+
+        preview.src = selectedImageData;
+
+        previewBox.style.display = "block";
+
+        message.textContent = "Image ready to upload!";
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+        imageInput.value = "";
+        selectedImageData = "";
+        previewBox.style.display = "none";
+
+        message.textContent = "Please select another image.";
+
+    }
+
+});
+
+
+// ANONYMOUS LOGIN
 
 try {
 
@@ -197,44 +654,70 @@ try {
 
 } catch (error) {
 
-    message.textContent = "Connection error: " + error.message;
-
     console.error(error);
+
+    message.textContent = "Connection error: " + error.message;
 
 }
 
 
-// STEP 4: ADD PROJECT
+// ADD PROJECT
 
-document.getElementById("addBtn").addEventListener("click", async function() {
+addBtn.addEventListener("click", async function() {
 
     const name = nameInput.value.trim();
     const description = descriptionInput.value.trim();
+    const creator = creatorInput.value.trim();
     const github = githubInput.value.trim();
 
-    if (!name || !description || !github) {
-        alert("Please fill all fields!");
+    if (!name || !description || !creator || !github) {
+
+        alert("Please fill all required fields!");
+
         return;
+
     }
 
     let url;
 
     try {
+
         url = new URL(github);
+
     } catch {
-        alert("Enter a valid GitHub URL!");
+
+        alert("Please enter a valid GitHub URL!");
+
         return;
+
     }
 
-    if (url.protocol !== "https:" || url.hostname !== "github.com") {
-        alert("Enter a valid GitHub repository URL!");
+    if (
+        url.protocol !== "https:" ||
+        url.hostname !== "github.com" ||
+        url.username ||
+        url.password ||
+        url.search ||
+        url.hash ||
+        url.pathname.split("/").filter(Boolean).length < 2
+    ) {
+
+        alert("Please enter a valid GitHub repository URL!");
+
         return;
+
     }
 
     if (!currentUser) {
+
         alert("Database is not connected!");
+
         return;
+
     }
+
+    addBtn.disabled = true;
+    addBtn.textContent = "Saving Project...";
 
     try {
 
@@ -242,28 +725,54 @@ document.getElementById("addBtn").addEventListener("click", async function() {
 
             name: name,
             description: description,
+            creator: creator,
             github: github,
+
+            // IMAGE SAVED DIRECTLY IN FIRESTORE
+
+            imageData: selectedImageData,
+
             ownerUid: currentUser.uid,
+            status: "Added",
             createdAt: Date.now()
 
         });
 
+
+        // CLEAR FORM
+
         nameInput.value = "";
         descriptionInput.value = "";
+        creatorInput.value = "";
         githubInput.value = "";
+        imageInput.value = "";
 
-        message.textContent = "Project saved successfully!";
+        selectedImageData = "";
+
+        previewBox.style.display = "none";
+        preview.removeAttribute("src");
+
+        message.textContent = "Project added successfully! 🎉";
 
     } catch (error) {
 
-        alert("Error: " + error.message);
+        console.error(error);
+
+        message.textContent = "Error: " + error.message;
+
+        alert("Project could not be saved: " + error.message);
+
+    } finally {
+
+        addBtn.disabled = false;
+        addBtn.textContent = "🚀 Add Project";
 
     }
 
 });
 
 
-// STEP 5: LOAD PROJECTS
+// LOAD PROJECTS
 
 function loadProjects() {
 
@@ -272,124 +781,279 @@ function loadProjects() {
         where("ownerUid", "==", currentUser.uid)
     );
 
-    onSnapshot(q, function(snapshot) {
+    onSnapshot(
 
-        projects = [];
+        q,
 
-        snapshot.forEach(function(item) {
+        function(snapshot) {
 
-            projects.push({
-                id: item.id,
-                ...item.data()
+            projects = [];
+
+            snapshot.forEach(function(item) {
+
+                projects.push({
+                    id: item.id,
+                    ...item.data()
+                });
+
             });
 
-        });
+            projects.sort(function(a, b) {
 
-        displayProjects();
+                return (b.createdAt || 0) - (a.createdAt || 0);
 
-        message.textContent = "Database connected successfully!";
+            });
 
-    }, function(error) {
+            displayProjects();
 
-        message.textContent = "Database error: " + error.message;
+            message.textContent = "Database connected successfully!";
 
-    });
+        },
+
+        function(error) {
+
+            console.error(error);
+
+            message.textContent = "Database error: " + error.message;
+
+        }
+
+    );
 
 }
 
 
-// STEP 6: DISPLAY PROJECTS
+// DISPLAY PROJECTS
 
 function displayProjects() {
 
-    const value = document.getElementById("search")
-        .value.toLowerCase();
+    const value = document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
 
     projectList.replaceChildren();
 
     const filtered = projects.filter(function(project) {
 
         return (
-            project.name.toLowerCase().includes(value) ||
-            project.description.toLowerCase().includes(value)
+
+            String(project.name || "").toLowerCase().includes(value) ||
+
+            String(project.description || "").toLowerCase().includes(value) ||
+
+            String(project.creator || "").toLowerCase().includes(value)
+
         );
 
     });
 
+
+    if (filtered.length === 0) {
+
+        const empty = document.createElement("div");
+
+        empty.className = "empty";
+
+        empty.textContent = projects.length === 0
+            ? "No projects added yet. Add your first project!"
+            : "No matching projects found.";
+
+        projectList.appendChild(empty);
+
+    }
+
+
     filtered.forEach(function(project) {
 
         const card = document.createElement("div");
+
         card.className = "project";
 
+
+        // PROJECT IMAGE
+
+        if (project.imageData) {
+
+            const image = document.createElement("img");
+
+            image.className = "project-image";
+
+            image.src = project.imageData;
+
+            image.alt = project.name || "Project image";
+
+            image.loading = "lazy";
+
+            card.appendChild(image);
+
+        }
+
+
+        const content = document.createElement("div");
+
+        content.className = "project-content";
+
+
+        // PROJECT NAME
+
         const title = document.createElement("h3");
-        title.textContent = project.name;
+
+        title.textContent = "🚀 " + (project.name || "Untitled Project");
+
+
+        // DESCRIPTION
 
         const description = document.createElement("p");
-        description.textContent = project.description;
+
+        description.className = "project-description";
+
+        description.textContent =
+            project.description || "No description available.";
+
+
+        // CREATOR
+
+        const creator = document.createElement("div");
+
+        creator.className = "creator";
+
+        creator.textContent =
+            "👤 Created By: " + (project.creator || "Not specified");
+
+
+        // STATUS
 
         const status = document.createElement("p");
+
         status.className = "status";
-        status.textContent = "Status: Added";
+
+        status.textContent =
+            "Status: " + (project.status || "Added");
+
+
+        // GITHUB LINK
 
         const link = document.createElement("a");
-        link.href = project.github;
+
+        link.className = "project-link";
+
+        link.href = project.github || "#";
+
         link.target = "_blank";
+
         link.rel = "noopener noreferrer";
+
         link.textContent = "View GitHub Repository";
 
-        const deleteButton = document.createElement("button");
-        deleteButton.className = "delete";
-        deleteButton.textContent = "Delete";
+// DELETE BUTTON
 
-        deleteButton.addEventListener("click", function() {
-            deleteProject(project.id);
-        });
+const deleteButton =
 
-        card.append(title, description, status, link, deleteButton);
+document.createElement("button");
 
-        projectList.appendChild(card);
+deleteButton.className =
 
-    });
+"delete";
 
-    document.getElementById("total").textContent = projects.length;
+deleteButton.textContent =
 
-    document.getElementById("live").textContent = "0";
+"Delete";
 
-}
+deleteButton.addEventListener("click", function() {
 
-
-// STEP 7: SEARCH PROJECTS
-
-document.getElementById("search").addEventListener("input", function() {
-
-    displayProjects();
+deleteProject(project.id);
 
 });
 
+content.append(
 
-// STEP 8: DELETE PROJECT
+title,
+
+description,
+
+creator,
+
+status,
+
+link,
+
+deleteButton
+
+);
+
+card.appendChild(content);
+
+projectList.appendChild(card);
+
+});
+// DASHBOARD COUNTERS
+
+document.getElementById("total").textCont
+
+ent
+
+projects.length;
+
+document.getElementById("live").textConte
+
+nt =
+
+projects.filter(function(project)
+
+{
+
+return project.status ===
+
+"Live";
+
+}).length;
+
+}
+// SEARCH
+
+document.getElementById("search").addEven
+
+tListener(
+
+"input",
+
+displayProjects
+
+);
+// DELETE PROJECT
 
 async function deleteProject(id) {
 
-    if (!confirm("Are you sure you want to delete this project?")) {
-        return;
-    }
+const confirmDelete = confirm( "Are you sure you want to delete this project?" );
 
-    try {
+if (!confirmDelete) {
 
-        await deleteDoc(doc(db, "projects", id));
+return;
 
-        message.textContent = "Project deleted successfully!";
+}
 
-    } catch (error) {
+try {
 
-        alert("Delete error: " + error.message);
+await deleteDoc (doc(db, "projects", id));
 
-    }
+message.textContent = "Project deleted successfully!";
+
+} catch (error) {
+
+console.error(error);
+
+alert("Delete error: " +
+
+error.message);
+
+}
 
 }
 
 </script>
 
 </body>
+
 </html>
